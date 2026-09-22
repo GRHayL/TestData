@@ -22,6 +22,12 @@ input streams. GCC and Clang generation must be byte-identical when both
 compilers are available. The stored outer-grid poison values are intentional;
 the legacy producer and GRHayL replay compare only the initialized interior.
 
+The input streams are produced by
+`Unit_Tests/data_gen/unit_test_data_ET_Legacy_induction_gauge_rhs.c` in GRHayL.
+Their Gaussian coordinates use floating-point grid spacing, so the checked
+interior retains the intended spatial variation. Regenerate both inputs before
+running the independent output generator whenever that input definition changes.
+
 These outputs replace invalid files whose compared interiors contained only
 non-finite values. They are not generated from GRHayL and therefore remain an
 independent compatibility oracle.
