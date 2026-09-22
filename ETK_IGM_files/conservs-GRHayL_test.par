@@ -1,0 +1,71 @@
+## mclachlan tov_static
+ActiveThorns = "Time MoL"
+Cactus::cctk_itlast = 0
+ActiveThorns = "Coordbase CartGrid3d Boundary StaticConformal"
+ActiveThorns = "SymBase ADMBase TmunuBase HydroBase InitBase ADMMacros"
+ActiveThorns = "IOUtil"
+#ActiveThorns = "Formaline"
+ActiveThorns = "SpaceMask CoordGauge Constants LocalReduce aeilocalinterp LoopControl"
+ActiveThorns = "Carpet CarpetLib CarpetReduce CarpetRegrid2 CarpetInterp"
+ActiveThorns = "IllinoisGRMHD ID_converter_ILGRMHD Convert_to_HydroBase"
+
+cactus::cctk_show_schedule = "no"
+cactus::cctk_show_banners = "no"
+cactus::cctk_brief_output = "yes"
+
+IllinoisGRMHD::conserv_to_prims_debug = 0
+IllinoisGRMHD::Psi6threshold = 1e100
+IllinoisGRMHD::damp_lorenz = 0.1
+
+IllinoisGRMHD::tau_atm=1e-24 #set to match computed value in GRHayL
+IllinoisGRMHD::rho_b_atm = 1e-12
+
+# grid parameters
+driver::ghost_size = 3
+grid::avoid_origin = "no"
+CartGrid3D::type         = "coordbase"
+CoordBase::domainsize = "minmax"
+CoordBase::xmin = -1.5
+CoordBase::ymin = -1.5
+CoordBase::zmin = -1.5
+CoordBase::xmax =  1.5
+CoordBase::ymax =  1.5
+CoordBase::zmax =  1.5
+CoordBase::dx   =  1.6/64.0
+CoordBase::dy   =  1.6/64.0
+CoordBase::dz   =  1.6/64.0
+
+TmunuBase::stress_energy_storage = yes
+HydroBase::timelevels            = 3
+
+Carpet::domain_from_coordbase = "yes"
+Carpet::enable_all_storage       = no
+Carpet::poison_new_timelevels    = "yes"
+Carpet::check_for_poison         = "no"
+Carpet::init_3_timelevels        = no
+Carpet::init_fill_timelevels     = "yes"
+CarpetLib::poison_new_memory = "yes"
+CarpetLib::poison_value      = 114
+
+ActiveThorns = "GenericFD NewRad"
+ADMBase::evolution_method        = "static"
+ADMBase::lapse_evolution_method  = "static"
+ADMBase::shift_evolution_method  = "static"
+
+# init parameters
+InitBase::initial_data_setup_method = "init_some_levels"
+
+ActiveThorns = "TOVSolver"
+ADMBase::initial_data            = "tov"
+ADMBase::initial_lapse           = "tov"
+ADMBase::initial_shift           = "tov"
+
+TOVSolver::TOV_Rho_Central[0] = 1.29285309e-1
+TOVSolver::TOV_Gamma       = 2.0
+TOVSolver::TOV_K           = 1.0
+
+ID_converter_ILGRMHD::Gamma_Initial = 2.0
+ID_converter_ILGRMHD::K_Initial     = 1.0
+
+IllinoisGRMHD::gamma_th=2.0
+IllinoisGRMHD::neos=1
